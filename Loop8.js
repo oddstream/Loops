@@ -6,10 +6,12 @@
 
 'use strict';
 
-const gameState = new GameState(8);
-
 let DEBUGGING = false;
 let DESIGNING = false;
+
+const VERSION = '0.1.22.0';
+
+const gameState = new GameState(8);
 
 const Q = 100;                  const strQ = String(Q);
 const Q50 = Math.floor(Q/2);    const strQ50 = String(Q50);
@@ -48,8 +50,6 @@ const INPROGRESS_COLOR = 'darkblue';
 const COMPLETED_COLOR = 'black';
 const HIGHLIGHT_COLOR = 'darkorange';
 
-let globals = null;
-
 const isOdd = (x) => { return (x&1)==1; };
 
 function addStyle()
@@ -65,18 +65,6 @@ function removeStyle()
     let ele = null;
     while ( ele = document.querySelector('head>style') )
         ele.parentNode.removeChild(ele);
-}
-
-class Globals
-{
-    constructor()
-    {
-//        this.eleClick = new HTMLMediaElement(); // Javascript cast
-        this.eleClick = document.querySelector('audio#click');
-
-//        this.eleShutter = new HTMLMediaElement(); // Javascript cast
-        this.eleShutter = document.querySelector('audio#shutter');
-    }
 }
 
 class Tile
@@ -301,7 +289,6 @@ class Tile
 
         if ( this.isGridComplete() )
         {
-            if ( globals.eleShutter ) globals.eleShutter.play();
             window.setTimeout( () => {
                 window.location.reload(false);
             }, 500);            
@@ -310,8 +297,6 @@ class Tile
 
         if ( 0 === this.coins )
             return;
-
-        if ( globals.eleClick) globals.eleClick.play();
 
         this.rotate5(!event.altKey, 45)
         .then( () => { 
@@ -656,8 +641,6 @@ function main()
     DESIGNING = urlParams.design ? urlParams.design : false;
     const numX = urlParams.x ? urlParams.x : Math.max(Math.floor(window.innerWidth / Q), 3);
     const numY = urlParams.y ? urlParams.y : Math.max(Math.floor(window.innerHeight / Q), 3);
-    
-    globals = new Globals();
 
     const got = new GridOfTiles(numX, numY);
     got.createHTML().placeCoins().jumbleCoins().setGraphics();

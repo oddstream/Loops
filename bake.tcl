@@ -1,20 +1,7 @@
-# Oddstream Solitaire builder
-# Invoke with tclsh bake.tcl [Filename.guts | local | db] from the Solitaire directory
+# Oddstream Loops builder
+# Invoke with tclsh bake.tcl [local | db] from the Loops directory
 # Using with ActiveTcl 8.6.8 from www.activestate.com
 # Using / as a pathname separator, which gets mapped to \
-
-proc buildHtml {htmlFile gutsFile} {
-  # Open the file for writing only. Truncate it if it exists. If it does not exist, create a new file.
-  # b is same as fconfigure $out -translation binary
-  set out [open $htmlFile wb]
-  foreach fname [concat build/header.txt $gutsFile build/symbols.svg build/footer.txt] {
-    set in [open $fname rb]
-    fcopy $in $out
-    close $in
-  }
-  close $out
-  puts " ... $htmlFile built"
-}
 
 proc xcopy {fname dst} {
   # fname is a file name e.g. "Usk.html"
@@ -71,53 +58,16 @@ proc publish {dst} {
     xcopy $htmlFile $dst
   }
 
-  foreach pngFile [glob -directory img *.png] {
-    xcopy $pngFile $dst
-  }
-
-  xcopy Solitaire.css $dst
-  xcopy manifest.json $dst
-  xcopy index.html $dst
-
-  xcompile Solitaire.js $dst
-  xcompile index.js $dst
+  xcompile Loop4.js $dst
+  xcompile Loop6.js $dst
+  xcompile Loop8.js $dst
+  xcompile Util.js $dst
 }
 
 # start of doing things here
 
-puts "Oddstream solitaire builder"
+puts "Oddstream Loops builder"
 puts "Tcl version [info tclversion]"
-
-if { $argc > 0 && [string match -nocase {*.guts} [lindex $argv 0]] } then {
-  set gutsList [glob -directory build [lindex $argv 0]]
-  puts "Checking $gutsList"
-} elseif { $argc > 0 && [string match -nocase {*.html} [lindex $argv 0]] } then {
-  set gutsList [glob -directory build [file rootname [lindex $argv 0]].guts]
-  puts "Checking $gutsList"
-} else {
-  set gutsList [glob -directory build *.guts]
-  puts "Checking all html are up-to-date"
-}
-
-foreach gutsFile $gutsList {
-  set htmlFile "[file rootname [file tail $gutsFile]].html"
-  set updateHtml false
-  if { [file exists $htmlFile] } then {
-    set htmlTime [file mtime $htmlFile]
-    foreach fname [concat $gutsFile build/header.txt build/symbols.svg build/footer.txt] {
-      if { [file mtime $fname] > $htmlTime } then {
-        puts -nonewline "$htmlFile needs updating because of $fname"
-        set updateHtml true
-      }
-    }
-  } else {
-    puts -nonewline "$htmlFile does not exist"
-    set updateHtml true
-  }
-  if { $updateHtml } then {
-    buildHtml $htmlFile $gutsFile
-  }
-}
 
 if { $argc > 0 } then {
   if { [lindex $argv 0] eq "local" } then {
@@ -126,9 +76,6 @@ if { $argc > 0 } then {
   } elseif { [lindex $argv 0] eq "db" } then {
     puts "Publishing to dropbox"
     publish "c:/Users/oddst/Dropbox/Apps/My.DropPages/oddstream.droppages.com/Public/"
-    file copy -force \
-      c:/Users/oddst/Dropbox/Apps/My.DropPages/oddstream.droppages.com/Public/index.html \
-      c:/Users/oddst/Dropbox/Apps/My.DropPages/oddstream.droppages.com/Content
   }
 }
 

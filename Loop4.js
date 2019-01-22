@@ -5,6 +5,8 @@
 let DEBUGGING = false;
 let DESIGNING = false;
 
+const VERSION = '0.1.22.0';
+
 const Q = 100;                          const strQ = Q.toString();
 const Q50 = Math.floor(Q / 2);
 const Q25 = Math.floor(Q / 4);
@@ -68,7 +70,6 @@ class SvgHelper
 
     static empty(g)
     {
-        void g;         // ESLint warns about unused variables
     }
     static singleN(g)
     {
@@ -431,8 +432,8 @@ function GridOfTiles(numX = 7, numY = 5)
     this.numY = numY;
     this.grid = Tile.prototype.createRow(numX);
 
-    for ( let t=this.grid; --numY; t=Tile.prototype.createRowBelow(t) )
-        ;
+    for ( let t=this.grid; --numY; t=Tile.prototype.createRowBelow(t) ) {
+    }
 
     document.body.onkeydown = this.handleEventKeyDown.bind(this);
 }

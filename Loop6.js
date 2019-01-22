@@ -3,6 +3,8 @@
 let DEBUGGING = false;
 let DESIGNING = false;
 
+const VERSION = '0.1.22.0';
+
 const Q = 100;
 const Q75 = Math.floor(Q*0.75);
 const Q50 = Math.floor(Q*0.5);

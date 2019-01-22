@@ -1,5 +1,7 @@
 'use strict';
 
+const VERSION = '0.1.22.0';
+
 class Util {
   /**
    * Calculate the number of bits set in the coins for this cell
