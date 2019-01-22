@@ -1,11 +1,12 @@
 // @ts-check
-
 'use strict';
+
+let Loop4 = (function() {
 
 let DEBUGGING = false;
 let DESIGNING = false;
 
-const VERSION = '0.1.22.0';
+const VERSION = '0.1.22.2';
 
 const Q = 100;                          const strQ = Q.toString();
 const Q50 = Math.floor(Q / 2);
@@ -367,7 +368,7 @@ function Tile()
 
     // Tile implements the https://developer.mozilla.org/en-US/docs/Web/API/EventListener interface
     Tile.prototype.handleEvent = function (event) 
-    {   // event.type == "click"
+    {
         if ( DESIGNING )
         {
             this.toggle(event.offsetX, event.offsetY);
@@ -573,7 +574,7 @@ function GridOfTiles(numX = 7, numY = 5)
         {
             // n.b. the iterator must generate the rows across for the HTML grid to work
             t.div = document.createElement('div');
-            t.div.addEventListener('click', t);
+            t.div.addEventListener(/*'click'*/'pointerup', t);
             eleWrapper.appendChild(t.div);
         }
 
@@ -633,3 +634,5 @@ function main()
 }
 
 main();
+
+})();

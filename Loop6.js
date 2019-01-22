@@ -1,9 +1,11 @@
 'use strict';
 
+let Loop6 = (function() {
+
 let DEBUGGING = false;
 let DESIGNING = false;
 
-const VERSION = '0.1.22.0';
+const VERSION = '0.1.22.2';
 
 const Q = 100;
 const Q75 = Math.floor(Q*0.75);
@@ -310,7 +312,7 @@ class Honeycomb
             }
         }
 
-        this.svg.addEventListener('click', this);     // <g> and <path> &c don't accept listeners
+        this.svg.addEventListener(/*'click'*/'pointerup', this);     // <g> and <path> &c don't accept listeners
 
         eleWrapper.appendChild(this.svg);
         document.body.appendChild(eleWrapper);
@@ -484,3 +486,5 @@ function main()
 }
 
 main();
+
+})();

@@ -6,14 +6,16 @@
 
 'use strict';
 
+let Loop8 = (function() {
+
 let DEBUGGING = false;
 let DESIGNING = false;
 
-const VERSION = '0.1.22.0';
+const VERSION = '0.1.22.3';
 
 const gameState = new GameState(8);
 
-const Q = 100;                  const strQ = String(Q);
+const Q = 200;                  const strQ = String(Q);
 const Q50 = Math.floor(Q/2);    const strQ50 = String(Q50);
 const Q10 = Math.floor(Q/10);   const strQ10 = String(Q10); 
 
@@ -342,7 +344,7 @@ class Tile
             svg.appendChild(eleSvgPath);
         }
 
-        this.div.addEventListener('click', this);
+        this.div.addEventListener(/*'click'*/'pointerup', this);
 
         if ( this.coins )
         {
@@ -647,3 +649,5 @@ function main()
 }
 
 main();
+
+})();
