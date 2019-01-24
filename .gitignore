@@ -1,2 +1,4 @@
 compiler.jar
 desktop.ini
+test*.*
+*.js.bak

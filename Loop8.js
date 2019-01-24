@@ -1,17 +1,12 @@
 // @ts-check
-// TODO check for memory leaks
-// TODO find out why SVG onend event doesn't work
-// TODO graphics gap at some junctions
-// TODO T not working in SVG path after Q
-
 'use strict';
 
 let Loop8 = (function() {
 
+window.LOOPS_VERSION = '0.1.23.0';  // for bake
+
 let DEBUGGING = false;
 let DESIGNING = false;
-
-const VERSION = '0.1.22.3';
 
 const gameState = new GameState(8);
 

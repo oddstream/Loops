@@ -1,11 +1,12 @@
+// @ts-check
 'use strict';
 
 let Loop6 = (function() {
 
+window.LOOPS_VERSION = '0.1.23.0';  // for bake
+
 let DEBUGGING = false;
 let DESIGNING = false;
-
-const VERSION = '0.1.22.2';
 
 const Q = 100;
 const Q75 = Math.floor(Q*0.75);

@@ -3,10 +3,10 @@
 
 let Loop4 = (function() {
 
+window.LOOPS_VERSION = '0.1.23.0';
+
 let DEBUGGING = false;
 let DESIGNING = false;
-
-const VERSION = '0.1.22.2';
 
 const Q = 100;                          const strQ = Q.toString();
 const Q50 = Math.floor(Q / 2);

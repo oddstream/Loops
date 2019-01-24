@@ -58,9 +58,12 @@ proc publish {dst} {
     xcopy $htmlFile $dst
   }
 
+  xcopy Loops.css $dst
+
   xcompile Loop4.js $dst
   xcompile Loop6.js $dst
   xcompile Loop8.js $dst
+  xcompile Open4.js $dst
   xcompile Util.js $dst
 }
 
