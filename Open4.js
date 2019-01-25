@@ -47,9 +47,10 @@ const gameState = new GameState(2);
  * Helper function to create SVG element and set attributes
  * @param {string} name 
  * @param {any} attribs 
- * @return SVGSVGElement
+ * @return {SVGSVGElement}
  */
 function createSVGElement(name, attribs) {
+  /** @type {SVGSVGElement} */
   const e = document.createElementNS(SVG_NAMESPACE, name);
   for ( let a in attribs ) {
     e.setAttributeNS(null, a, attribs[a]);
@@ -59,12 +60,11 @@ function createSVGElement(name, attribs) {
 
 class Tile {
   /**
-   * 
-   * @param {SVGSVGElement} parentEle 
+   * @param {SVGSVGElement} parentElement 
    * @param {number} x grid position
    * @param {number} y grid position
    */
-  constructor(parentEle, x,y) {
+  constructor(parentElement, x,y) {
     this.x = x;
     this.y = y;
     this.n = this.e = this.w = this.s = null;
@@ -75,9 +75,9 @@ class Tile {
       'width': strQ,
       'height': strQ
     });
-    this.svg.addEventListener(/*'click'*/'pointerup', this);
+    this.svg.addEventListener('pointerup', this);
     this.svg.classList.add('tile');
-    parentEle.appendChild(this.svg);
+    parentElement.appendChild(this.svg);
   }
 
   rotate5() {
@@ -171,7 +171,10 @@ class Tile {
     }
   }
 
-    // Tile implements the https://developer.mozilla.org/en-US/docs/Web/API/EventListener interface
+  // Tile implements the https://developer.mozilla.org/en-US/docs/Web/API/EventListener interface
+  /**
+   * @param {PointerEvent} event 
+   */
   handleEvent(event) {
     if ( this.isGridComplete() ) {
       window.location.reload(false);
@@ -211,11 +214,6 @@ class Tile {
 
     if ( this.coins ) {
       const s = svgGrx[this.coins];
-      // const e = document.createElementNS(SVG_NAMESPACE, s.ele);
-      // // attribs is like { r: 25, cx: 0, cy: 100 }
-      // Object.keys(s.attribs).forEach((key) =>
-      //   e.setAttributeNS(null, key, s.attribs[key])
-      // );
       const e = createSVGElement(s.ele, s.attribs);
       e.classList.add('object');
       this.svg.appendChild(e);
@@ -223,12 +221,16 @@ class Tile {
   }
 }
 
-class GridOfTiles 
-{
+class GridOfTiles {
+  /**
+   * @param {number=} numX 
+   * @param {number=} numY 
+   */
   constructor(numX = 7, numY = 5) {
     this.numX = numX;
     this.numY = numY;
 
+    /** @type {SVGSVGElement} */
     this.svg = createSVGElement('svg', {
       'id': 'gridoftiles',
       'width': String(Q * this.numX),
@@ -239,6 +241,7 @@ class GridOfTiles
     this.svg.classList.add('grid');
     document.body.appendChild(this.svg);
 
+    /** @type {Tile} */
     this.grid = this.createFirstRow(this.svg, numX);
     let prevRow = this.grid;
     for ( let y=1; y<numY; y++ ) {

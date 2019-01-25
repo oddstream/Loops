@@ -17,6 +17,16 @@ body {
   fill: powderblue;
 }
 
+.boldobject {
+  stroke-width: 10;
+  stroke: var(--obj-color, teal);
+  fill: none;
+}
+
 .completed {
   fill: darkblue;
+}
+
+.boldcompleted {
+  stroke: black;
 }
